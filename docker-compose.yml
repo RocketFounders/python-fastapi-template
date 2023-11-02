@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+#  postgres:
+#    image: postgres:15.3
+#    restart: always
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    environment:
+#      POSTGRES_PASSWORD: ${DB_PASSWORD}
+#      POSTGRES_USER: ${DB_USERNAME}
+#      POSTGRES_DB: ${DB_DBNAME}
+#    ports:
+#      - '${DB_PORT:-5432}:5432'
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+volumes:
+  postgres_data:

@@ -1,0 +1,10 @@
+.git
+tests
+.idea
+/.env
+/.env.example
+
+/docker-compose.yml
+/README.md
+
+/poetry.lock
