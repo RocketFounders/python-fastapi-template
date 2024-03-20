@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "junice-server"
+name = "template-server"
 version = "0.1.0"
 description = "Junice App Server Side"
 authors = ["test"]
@@ -8,20 +8,19 @@ packages = [{ include = "core" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.100.0"
+fastapi = "^0.110.0"
 email-validator = "^2.0.0.post2"
 orjson = "^3.9.1"
-uvicorn = "^0.22.0"
+uvicorn = "^0.29.0"
 python-dotenv = "^1.0.0"
-asyncpg = "^0.28.0"
+asyncpg = "^0.29.0"
 passlib = "^1.7.4"
 python-jose = "^3.3.0"
-celery = {extras = ["redis"], version = "^5.3.4"}
-fastapi-camelcase = "^1.0.5"
-python-multipart = "^0.0.6"
+celery = { extras = ["redis"], version = "^5.3.4" }
+fastapi-camelcase = "^2.0.0"
+python-multipart = "^0.0.9"
 pydantic-settings = "^2.0.3"
 bcrypt = "^4.0.1"
-loguru = "^0.7.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"

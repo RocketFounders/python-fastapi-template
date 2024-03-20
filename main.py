@@ -1,31 +1,55 @@
 """
 Main config file for FastAPI
 """
+
 import logging
+from logging import config as logging_config
 import multiprocessing
 import os
 import random
-import ssl
 import string
 import time
+from contextlib import asynccontextmanager
+
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
-from dotenv import load_dotenv
 
 load_dotenv()
 
 from core import api
-from core.registry import db, ENV, activate_celery
+from core.registry import db, ENV
 
-# logging.config.fileConfig("logging.conf", disable_existing_loggers=False)
+logging_config.fileConfig("./logging.conf", disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    process_name = multiprocessing.current_process().name
+    logger.info(f"Process {process_name} started")
+    if ENV != "PROD":
+        for k, v in os.environ.items():
+            logger.info(f"{k}={v}")
+
+    await db.connect()
+
+    logger.info("Server started")
+    logger.info(f"ENV: {ENV}")
+    logger.info("Open http://localhost:8000/api/ping")
+
+    yield
+
+    await db.close()
+    logger.info("Server shutting down")
+
+
+app = FastAPI(lifespan=lifespan)
 app.include_router(api.router)
 
-if ENV != 'PROD':
+if ENV != "PROD":
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -36,7 +60,7 @@ if ENV != 'PROD':
 else:
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["app.junice.com"],
+        allow_origins=["<domain-address>"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -64,32 +88,6 @@ async def log_requests(request: Request, call_next):
     )
 
     return response
-
-
-@app.on_event("startup")
-async def startup_event():
-    # if ENV != "PROD":
-    #     ssl._create_default_https_context = ssl._create_unverified_context
-    # else:
-    #     ssl.create_default_context()
-    process_name = multiprocessing.current_process().name
-    logger.info(f"Process {process_name} started")
-    if ENV != "production":
-        for k, v in os.environ.items():
-            logger.info(f"{k}={v}")
-
-    await db.connect()
-    await activate_celery()
-
-    logger.info("Server started")
-    logger.info(f"ENV: {ENV}")
-    logger.info("Open http://localhost:8000/api/ping")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    await db.close()
-    logger.info("Server shutting down")
 
 
 def custom_openapi():

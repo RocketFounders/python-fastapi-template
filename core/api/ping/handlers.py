@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from core.registry import ping_storage, server_started, VERSION
 
-router = APIRouter(prefix='/ping', tags=['ping'])
+router = APIRouter(prefix="/ping", tags=["ping"])
 
 
 @router.get("/")

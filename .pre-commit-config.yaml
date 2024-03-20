@@ -1,8 +1,14 @@
 fail_fast: true
 
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: end-of-file-fixer
   - repo: https://github.com/ambv/black
-    rev: 23.3.0
+    rev: 24.2.0
     hooks:
       - id: black
-        args: [--diff, --check]
+        language_version: python3.11
