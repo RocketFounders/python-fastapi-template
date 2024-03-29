@@ -41,13 +41,14 @@ async def create_profile(data: CreateProfileRequest):
     return CreateProfileResponse(**profile)
 
 
-async def get_all_profiles(token: str = Depends(oauth2_scheme)) -> list[ProfileResponse]:
+async def get_all_profiles(
+    token: str = Depends(oauth2_scheme),
+) -> list[ProfileResponse]:
     return await profile_storage.get_all()
 
 
 async def update_profile_service(
-        update_request: UpdateProfileRequest,
-        token: str = Depends(oauth2_scheme)
+    update_request: UpdateProfileRequest, token: str = Depends(oauth2_scheme)
 ) -> ProfileResponse:
     try:
         payload = jwt.decode(token, CONFIG.secret_key, algorithms=["HS256"])

@@ -50,4 +50,3 @@ class UpdateProfileRequest(BaseModel):
     last_name: str = Field(
         alias="lastName", validation_alias=AliasChoices("last_name", "lastName")
     )
-

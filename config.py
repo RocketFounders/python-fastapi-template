@@ -4,8 +4,6 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     database_url: PostgresDsn | None = None
-    celery_brocker_dsn: RedisDsn | None = None
-    celery_is_active: bool = False
     secret_key: str = "VMcqXhjBcluujpGnOU8ymK0dYMsIz6Ho7aWRdu6wqsZMybWPYxJManmHRyWR4QVH"
     access_token_expire_days: int = 1
 

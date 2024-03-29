@@ -17,9 +17,7 @@ class ProfileStorage:
             {key: val for key, val in zip(row.keys(), row.values())}
         )
 
-    async def get_all(
-            self, throw_error: bool = False
-    ) -> list[ProfileDB]:
+    async def get_all(self, throw_error: bool = False) -> list[ProfileDB]:
         sql = "SELECT * FROM api_profile"
         rows = await self.db.fetch(sql)
         if not rows and throw_error:
@@ -32,7 +30,7 @@ class ProfileStorage:
         return profiles
 
     async def get_by_id(
-            self, profile_id: str, throw_error: bool = False
+        self, profile_id: str, throw_error: bool = False
     ) -> Optional[ProfileDB]:
         sql = "SELECT * FROM api_profile WHERE (id = $1)"
         row = await self.db.fetch_row(sql, profile_id)
@@ -50,7 +48,7 @@ class ProfileStorage:
         return self.row_to_profile(row)
 
     async def get_by_username(
-            self, username: str, throw_error: bool = True
+        self, username: str, throw_error: bool = True
     ) -> ProfileDB:
         sql = "SELECT * FROM api_profile WHERE (username = $1)"
         row = await self.db.fetch_row(sql, username)
@@ -59,15 +57,15 @@ class ProfileStorage:
         return self.row_to_profile(row)
 
     async def create(
-            self,
-            username: str,
-            password: str,
-            email: str,
-            phone_number: str,
-            first_name: str,
-            last_name: str,
-            photo_url: str,
-            role: str,
+        self,
+        username: str,
+        password: str,
+        email: str,
+        phone_number: str,
+        first_name: str,
+        last_name: str,
+        photo_url: str,
+        role: str,
     ) -> ProfileDB:
         sql = """
         INSERT INTO api_profile
