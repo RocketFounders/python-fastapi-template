@@ -1,7 +1,9 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import EmailStr
+
+from core.common import BaseSchema
 
 
-class UpdateProfile(BaseModel):
+class UpdateProfile(BaseSchema):
     email: EmailStr
     phone_number: str | None
     first_name: str | None

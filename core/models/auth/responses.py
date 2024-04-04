@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field, AliasChoices, computed_field
+from pydantic import computed_field
+
+from core.common import BaseSchema
 
 
-class TokenResponse(BaseModel):
+class TokenResponse(BaseSchema):
     access_token: str
     token_type: str
 

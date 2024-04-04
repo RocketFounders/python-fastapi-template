@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from core.common import BaseSchema
 
 
-class ProfileDB(BaseModel):
+class ProfileDB(BaseSchema):
     id: str | None
     username: str | None
     password: str | None
