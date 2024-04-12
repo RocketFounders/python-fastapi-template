@@ -29,7 +29,7 @@ pyenv local 3.11.4
 curl -sSL https://install.python-poetry.org | python3 -
 
 # for zsh
-poetry completions zsh > ~/.zfunc/_poetry 
+poetry completions zsh > ~/.zfunc/_poetry
 # and add to .zshrc
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
@@ -47,7 +47,7 @@ plugins(
 )
 ```
 
---- 
+---
 
 ### Install dependencies
 
@@ -64,15 +64,25 @@ cp .env.example .env
 ```
 2. Change data in .env file
 > **DATABASE_URL** – your postgreSQL DSN
-> 
+>
 > **SECRET_KEY** – special secret key. You can generate it with openssl:
 > ```openssl rand -hex 32```
 >
 > **ACCESS_TOKEN_EXPIRE_DAYS** – JWT token expire timedelta. By default, set 1 day
+>
+> **CELERY_BROKER_DSN** - your redis DSN
+>
+> **CELERY_BACKEND_DSN** - your postgreSQL DSN
+
 
 3. Run the application with `make`
 ```shell
 make uvicorn_start
+```
+
+4. Run Celery worker with `make`
+```shell
+make start_celery
 ```
 
 ---
