@@ -1,7 +1,7 @@
-from core.registry import CELERY as app
+from tasks.celery_app import CELERY
 
 
-@app.task
+@CELERY.task
 def task():
     with open("~/Desktop/hello.txt", "w") as f:
         f.write("hello world")
