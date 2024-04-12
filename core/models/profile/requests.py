@@ -1,7 +1,9 @@
-from pydantic import BaseModel, EmailStr, Field, AliasChoices
+from pydantic import EmailStr
+
+from core.common import BaseSchema
 
 
-class CreateProfileRequest(BaseModel):
+class CreateProfileRequest(BaseSchema):
     username: str
     password: str
     email: EmailStr
